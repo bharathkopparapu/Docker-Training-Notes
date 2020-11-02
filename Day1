@@ -102,15 +102,299 @@ centos
 key -
 
 Other Container Runtime tools?
+----------------------------------------
+https://www.devopsschool.com/blog/list-of-top-container-runtime-interface-projects/
+
+Docker Components
+===========================================
+Docker Engine
+  12  which docker
+   13  ps -eaf | grep docker
+   14  which containerd
+
+
+OS image contains...
+	BOOT FileSystems	KERNAL
+	Root FileSystems	@ /
+	User FileSystems
+	App FileSystems
+https://www.vagrantbox.es/
+
+
+Docker Image
+	Collection of filesystems
+		Root FileSystems	ubuntu,fedora,deb,windows,rhel
+		User FileSystems	root | jenkins | administrator
+		App FileSystems		jdk -> jenkins'
+						Java based
+						8080 - WEB 
+						50000 - Agent
+						
+
+Docker Registery	
+		Repos
+			has image
+	Public
+		hub.docker.com
+		gr
+
+	Pvt
+		artifactory
+		nexus
+		ecr
+
+Docker Container
+	When you run image, 
+		one copy of image(MNT)
+		- get mounted to USER NS
+		one net ns get attached to user
+		one pid ns get attached to user
+		
+	Whatever you would have in image - you have in cont.
+	From one Image - you can create multiple Container.
+
 
 Docker Workflow
+=========================
+Human -> Docker Client --> Docker Server
+		CHECK - If docker image exist in local registry
+				ask containerd to allocate resources for container.
+		CHECK - If docker image do exist in local registry
+				- first download from docker hub registry to local
+				- ask containerd to allocate resources for container.
 
-Container Workflow
 
----------------------
-centos1 - DOCKER
-centos2
-windows
+Human?
+born -> kid -> teen -> young -> mid -> old -> die
+
+vms lifecycle.
+create -> start -> stop -> start -> restart -> pause -> unpause -> kill -> rm
+
+Container Lifecycle
+--------------------------------------------------------------------
+create -> start -> stop -> start -> restart -> pause -> unpause -> kill -> rm
+
+ 9  docker info
+   10  docker version
+   11  clear
+   12  which docker
+   13  ps -eaf | grep docker
+   14  which containerd
+   15  history
+   16  clear
+   17  docker images
+   18  docker pull jenkins
+   19  clear
+   20  docker images
+   21  docker ps
+   22  docker ps -a
+   23  docker  create jenkins
+   24  docker ps
+   25  docker ps -a
+   26  docker  create jenkins
+   27  docker ps -~a
+   28  clear
+   29  docker ps -a
+   30  docker start adfefee0af6d
+   31  docker ps -a
+   32  docker stop adfefee0af6d
+   33  docker ps -a
+   34  docker start adfefee0af6d
+   35  docker ps -a
+   36  clear
+   37  docker ps -a
+   38  docker restart adfefee0af6d
+   39  docker ps -a
+   40  clear
+   41  docker pause  adfefee0af6d
+   42  docker ps -a
+   43  docker unpause  adfefee0af6d
+   44  docker ps -a
+   45  clear
+   46  docker ps
+   47  docker ps -a
+   48  docker kill adfefee0af6d
+   49  docker ps -a
+   50  clear
+   51  docker ps -a
+   52  docker start 744e137d5f6c
+   53  docker ps -a
+   54  docker rm adfefee0af6d 744e137d5f6c
+   55  docker ps -a
+   56  docker stop 744e137d5f6c
+   57  docker rm 744e137d5f6c
+   58  docker ps -a
+   59  clear
+   60  history
+
+
+Assignment -
+===============================================
+Pause Vs Unpause
+stop Vs Kill
+
+
+Lab Time - 15 mins
+Assignment - 15 mins.
+
+Shiva# - 8106270903
+============================================
+
+What is Container? Lets Proove it?
+
+		one copy of image(MNT)
+		- get mounted to USER NS
+		one net ns get attached to user
+		one pid ns get attached to user
+
+ 1  clear
+    2  ls
+    3  id
+    4  ps
+    5  ps -eaf | grep 19159
+    6  ps -eaf | grep 19157
+    7  ps -eaf | grep 19137
+    8  ps -eaf | grep 19136
+    9  clear
+   10  ps -eaf | grep 19133
+   11  ps -eaf | grep 1207
+   12  ps -eaf
+   13  clwe
+   14  pwd
+   15  cleatr
+   16  clear
+   17  cd
+   18  pwd
+   19  docker ps
+   20  docker ps -a
+   21  docker create jenkins
+   22  docker ps -a
+   23  clear
+   24  docker ps -a
+   25  docker start a253429a988b
+   26  docker ps -a
+   27  ps -eaf | grep a253429a988b
+   28  ps -eaf | grep 8901
+   29  clear
+   30  ls
+   31  cd /
+   32  pwd
+   33  ls
+   34  clear
+   35  docker ps
+   36  docker exec a253429a988b ls /
+   37  clear
+   38  df -kh
+   39  docker exec a253429a988b df -kh
+   40  clear
+   41  docker create jenkins
+   42  docker ps -a
+   43  docker start e46d2793e036
+   44  clear
+   45  docker ps
+   46  docker exec e46d2793e036 df -kh
+   47  docker exec a253429a988b df -kh
+   48  docker exec e46d2793e036 ls /tmp
+   49  docker exec e46d2793e036 touch /tmp/ramukaka.txt
+   50  docker exec e46d2793e036 ls /tmp
+   51  docker exec a253429a988b ls /tmp
+   52  clear
+   53  ls
+   54  docker ps
+   55  docker inspect e46d2793e036 | grep -i ip
+   56  docker inspect a253429a988b | grep -i ip
+   57  clear
+   58  ps -eaf
+   59  clear
+   60  docker ps
+   61  docker exec e46d2793e036 ps -eaf
+   62  docker exec a253429a988b ps -eaf
+   63  history
 
 
 
+
+Physcial Server			Virtual Server			Container   
+==================================================================================
+is running			is running			is running
+When				When				When	
+PID 1 is running		PID 1 is running		PID 1 is running
+
+
+PID 1 is SYSTEMD		PID 1 is SYSTEMD		PID 1 is ANYTHING
+								java
+								python
+								perl
+								ruby
+								a
+								b
+								c
+=============================================================================
+RUN
+-----------------------------------
+pull + create + start + ATTACHED TO Container OR (Become a container) or become PID1
+
+
+RUN -d
+-----------------------------------
+pull + create + start + DO NOT ATTACHED TO Container OR (DO NOT Become a container) or DO NOT become PID1
+
+
+
+  1  clear
+    2  ps
+    3  docker run jenkins
+    4  clear
+    5  docker ps -a
+    6  docker run -d jenkins
+    7  docker ps
+    8  clear
+    9  docker run ubuntu
+   10  docker ps
+   11  docker ps -a
+   12  clear
+   13  docker ps -a
+   14  /bin/bash
+   15  clear
+   16  history
+
+How to use container?
+==============================
+how to get inside a container?
+- exec
+	exec would execute an executable inside a container.
+	interact with system using - shell - 
+	docker exec -it 5f606dfcaa80 /bin/bash
+
+- attach
+	attached to PID 1
+
+  29  docker exec 5f606dfcaa80 ls
+   30  docker exec 5f606dfcaa80 ps
+   31  clear
+   32  docker exec 5f606dfcaa80 dfsadsad
+   33  docker exec 5f606dfcaa80 /bin/bash
+   34  docker exec -it 5f606dfcaa80 /bin/bash
+   35  clear
+   36  docker ps
+   37  docker attach 5f606dfcaa80
+   38  docker ps
+   39  clear
+   40  docker run -it ubtunu
+   41  docker run -it ubuntu
+   42  docker ps -a
+   43  cleat
+   44  clear
+   45  docker run -it ubuntu
+   46  docker ps
+   47  docker run -itd ubuntu
+   48  docker ps
+   49  history
+
+]
+
+How to access a container from outside?
+
+
+How to come out of the cointainer without exisitng?
+control +  p + q
