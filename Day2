@@ -1,0 +1,465 @@
+13.233.158.211
+=====================
+How to access a container from outside?
+-----------------------------------------------------
+docker run -d jenkins
+
+docker run -d -p 8080:8080 jenkins
+		 node:cont
+
+docker run -d -p 0.0.0.0:8080:?:?:?:8080 jenkins
+
+
+82  docker ps -a
+  183  docker stop $(docker ps -aq)
+  184  docker rm $(docker ps -aq)
+  185  clear
+  186  docker ps -a
+  187  docker run -d jenkins
+  188  ls
+  189  docker ps
+  190  docker run -itd ubuntu
+  191  docker ps
+  192  clear
+  193  ls
+  194  docker ps
+  195  docker inspect a33f603f43f6 | grep -i ip
+  196  clear
+  197  ping 172.17.0.3
+  198  clear
+  199  docker ps
+  200  docker inspect 2a25653a6508 | grep -i ip
+  201  ping 172.17.0.2
+  202  curl http://172.17.0.2:8080
+  203  docker ps
+  204  clear
+  205  docker run -d -p 8080:8080 jenkins
+  206  docker ps
+  207  docker run -d -p 8090:8080 jenkins
+  208  docker run -d -p 8090:8080 jenkins
+  209  history
+====================================================
+https://www.devopsschool.com/tutorial/docker/commands/index.html
+
+cp
+
+ 214  touch devopsschool.txt
+  215  vi devopsschool.txt
+  216  more devopsschool.txt
+  217  docker ps
+  218  docker exec a33f603f43f6 ls/ opt
+  219  clear
+  220  docker exec a33f603f43f6 ls /opt
+  221  docker cp devopsschool.txt a33f603f43f6:/opt
+  222  docker exec a33f603f43f6 ls /opt
+  223  ls
+  224  rm -rf devopsschool.txt
+  225  ls
+  226  docker cp a33f603f43f6:/opt/devopsschool.txt .
+  227  ls
+  228  more devopsschool.txt
+
+diff
+---------------------
+	Anything you do in Container after getting created - you can see using diff comm.
+	- added
+	- delted
+	- change
+
+
+231  ls
+  232  docker ps
+  233  docker attach a33f603f43f6
+  234  docker ps
+  235  docker diff a33f603f43f6
+
+
+
+port
+
+[root@ip-172-31-14-200 centos]# docker port a18f7917f412
+8080/tcp -> 0.0.0.0:8090
+[root@ip-172-31-14-200 centos]# docker port 2a25653a6508
+[root@ip-172-31-14-200 centos]# docker port a33f603f43f6
+[root@ip-172-31-14-200 centos]#
+
+
+rename
+
+
+  242  clear
+  243  docker ps
+  244  docker rename a18f7917f412 dev1
+  245  docker rename 33f00104e9dc dev2
+  246  docker ps
+  247  clear
+  248  docker run -itd --name dev3 ubuntu
+  249  docker ps
+  250  docker help run
+  251  history
+
+
+Assignment 2
+=====================
+update	Update configuration of one or more containers
+wait	Block until one or more containers stop, then print their exit codes
+==============================================================================
+
+logs	Fetch the logs of a container
+ps	List containers
+stats	Display a live stream of container(s) resource usage statistics
+top	Display the running processes of a container
+events	Get real time events from the server
+
+
+189  docker logs a33f603f43f6
+  190  docker ps
+  191  docker logs a18f7917f412
+  192  clear
+  193  docker stats
+  194  docker run -itd -m 200m ubuntu
+  195  docker ps
+  196  docker stats
+  197  docker ps
+  198  ps -eaf | grep docker
+  199  clear
+  200  docker ps
+  201  docker top 7951c0aa702e
+  202  clear
+  203  docker stop $(docker ps -aq)
+  204  docker stop $(docker ps -aq)
+  205  clear
+  206  docker ps -a
+  207  docker rm $(docker ps -aq)
+  208  docker ps -a
+  209  clear
+  210  history
+docker events
+
+
+187  docker ps -a
+  188  docker ps -a
+  189  docker ps
+  190  docker ps -a
+  191  docker images
+  192  history
+  193  clear
+  194  dcoker images
+  195  docker images
+  196  docker rmi ubuntu jenkins
+  197  clear
+  198  docker info
+  199  docker history
+  200  docker inspect imagename'
+  201  docker inspect imagename
+  202  docker history imagename
+  203  docker images
+  204  docker info
+  205  clear
+  206  cd /var/lib/docker
+  207  ls
+  208  cd overlay2
+  209  clear
+  210  ls
+  211  du -sh .
+  212  docker pull ubuntu
+  213  ls
+  214  docker inspect ubuntu
+  215  clear
+  216  docker history  ubuntu
+  217  ls
+  218  clear
+  219  ls
+  220  du -h --max-depth=1
+  221  cd ./dbe4bcbb6204841262a73e4ff9d1d693da1a3732a12f1c72aaa2fa339e5fdca9
+  222  ls
+  223  clear
+  224  cd diff/
+  225  ls
+  226  clear
+  227  cd
+  228  ls
+  229  c /var/lib/docker/
+  230  ls
+  231  cd /var/lib/docker/
+  232  clear
+  233  ls
+  234  cd overlay2/
+  235  ls
+  236  docker run -itd ubuntu
+  237  ls
+  238  df -kh
+  239  cd 67acbdffcc7056b78109d8f196f3332a5a8815ea39d4bc0acb85b63a4ba10bfa
+  240  clear
+  241  ls
+  242  cd merged/
+  243  ls
+  244  history
+
+
+========================
+How to  create images?
+===========================
+Manual Way - Existing Container
+======================
+UB
+----
+Git
+Java
+Apache
+-------
+docker commit -m"up-up-git-ap-java" -a"rajesh kumar" 392f2d56d526 up-up-git-ap-java
+docker commit -m"light" -a"rajesh kumar" 3e82eaa73c76 light
+
+How to share this image with anyone?
+=========================================
+1. Using Tarball
+ docker images
+  395  docker save -o light.tar light
+  396  ls
+  397  clear
+  398  ls
+  399  ls
+  400  docker ps -a
+  401  clear
+  402  docker images
+  403  docker rmi light
+  404  docker images
+  405  ls
+  406  docker load -i light.tar
+  407  docker images
+  408  docker run -it light
+  
+2. Using Public registry
+Step 1 - Register at hub.docker.com - Verify
+Step 2 - Create a repo at hub.
+Step 3 - COND - Make sure IMAGE name MUST match with reponame using "docker tag"
+Step 4 - docker login
+Step 5 - docker push imagename
+
+00  docker ps -a
+  401  clear
+  402  docker images
+  403  docker rmi light
+  404  docker images
+  405  ls
+  406  docker load -i light.tar
+  407  docker images
+  408  docker run -it light
+  409  clear
+  410  history
+  411  clear
+  412  docker images
+  413  docker tag light devopsschools/tuesdayver
+  414  docker images
+  415  docker login
+  416  docker push devopsschools/tuesdayver
+  417  clear
+  418  docker commit -m"light" -a"rajesh kumar" 3e82eaa73c76 light:v1
+  419  docker commit -m"light" -a"rajesh kumar" 3e82eaa73c76 devopsschools/tuesdayver:v1
+  420  docker push devopsschools/tuesdayver:v1
+
+
+
+
+3. Using Private registry - NA
+
+
+==========================================================
+Volume
+==========================================================
+How to make DATA persistent beyond a lifecycle of the container?
+----
+Answer - Volume
+https://www.devopsschool.com/blog/understand-docker-volume-from-beginner-to-deep-dive-level/
+
+Volume Types 
+---
+volume --- /var/lib/docker/volumes
+mntfs -- ANYWHERE in the HOST MACHINE
+tmfs -- In Memory
+
+359  clear
+  360  cd /var/lib/docker/
+  361  find . -name devopsschool.com
+  362  find . -name devopsschool.txt
+  363  docker images
+  364  clear
+  365  ls
+  366  find . -name devopsschool.txt
+  367  docker ps
+  368  docker stop 38b3e08e3a3e859a19dd81f1a07e50970478adb4be67f69707ed1858cb70f8/diff/opt/devopsschool.txt
+  369  clear
+  370  docker ps
+  371  ls
+  372  find . -name devopsschool.txt
+  373  docker stop 6f6daa4e7bdd
+  374  find . -name devopsschool.txt
+  375  docker rm 6f6daa4e7bdd
+  376  find . -name devopsschool.txt
+  377  pwd
+  378  ls
+  379  clear
+  380  ls
+  381  cd volumes/
+  382  pwd
+  383  ls
+  384  pwd
+  385  clear
+  386  ls
+  387  clear
+  388  docker volume
+  389  docker volme ls
+  390  docker volume ls
+  391  clear
+  392  s
+  393  ls
+  394  docker volume ls
+  395  ls
+  396  clear
+  397  s
+  398  ;s
+  399  ls
+  400  cd 7f36605bca2a3731b872c112792f068d8dc10aee7d6ec2cf86233b09ba084742
+  401  clear
+  402  ls
+  403  cd _data/
+  404  ls
+  405  cd ..
+  406  lsx
+  407  clear
+  408  ls
+  409  cd ..
+  410  ls
+  411  docker volume
+  412  clear
+  413  docker volume
+  414  docker volume prune
+  415* clea
+  416  ls
+  417  docker volume
+  418  docker volume create
+  419  ls
+  420  docker volume create dev1
+  421  ls
+  422  clear
+  423  ls
+  424  docker volume create dev2
+  425  docker volume ls
+  426  docker volume create dev3
+  427  ls
+  428  docker volume rm dev3
+  429  ls
+  430  clear
+  431  docker volume
+  432  docker volume inspect dev2
+  433  clear
+  434  ls
+  435  docker help run
+  436  cls
+  437  clear
+  438  docker ps -a
+  439  docker run -itd -v dev1:/opt/raju1 ubuntu
+  440  docker ps
+  441  docker exec c1fe57171360 df -kh
+  442  docker exec c1fe57171360 ls /
+  443  docker exec c1fe57171360 ls /opt
+  444  clear
+  445  ls
+  446  docker attach c1fe57171360
+  447  docker ps
+  448  docker stop c1fe57171360
+  449  docker rm c1fe57171360
+  450  clear
+  451  ls
+  452  cd dev1/
+  453  ls
+  454  cd _data/
+  455  s
+  456  clear
+  457  ls
+  458  docker run -itd -v dev1:/opt/raju1 ubuntu
+  459  docker ps
+  460  docker exec 42ae0edd9ed9 ls /opt/raju1
+  461  clear
+  462  ls
+  463  docker run -itd -v dev1:/opt/raju1 -v dev2:/opt/rrr ubuntu
+  464  docker ps
+  465  docker exec 68ea86d9c856 ls /
+  466  docker exec 68ea86d9c856 ls /opt
+  467  clear
+  468  docker exec 68ea86d9c856 ls /opt
+  469  docker exec 68ea86d9c856 ls /opt/raju1
+  470  docker exec 68ea86d9c856 ls /opt/rrr
+  471  cd ..c
+  472  clear
+  473  ls
+  474  cd ..
+  475  ls
+  476  cd .
+  477  cd ..
+  478  ls
+  479  clear
+  480  ls
+  481  docker ps
+  482  history
+  
+  docker run -itd -v /opt/bkp:/tmp/ramu ubuntu
+
+
+
+
+
+
+
+
+
+
+Automated Way - Using dockerfile
+=======================
+Jenkins 
+	openjdk:8-jdk
+		buildpack-deps:buster-scm
+			buildpack-deps:buster-curl
+			      debian:buster
+			      		scratch
+Rule of Dockerfile
+====================
+Each line of Dockerfile would create one LAYER
+Each layer would be created from the container of previous layer.
+
+Base - UBUNTU
+- Install git
+- Volume - /opt/ramu
+- ARG - VER_HOME=/opt/ramu
+- ENV - use VER_HOME
+- COPY SOME files from host machine t- /opt/ramu
+
+FROM ubuntu
+MAINTAINER Rajesh Kumar rajesh@devopsschool.com
+ARG apploc=/opt/ramu
+RUN apt-get update
+RUN apt-get install git -y
+ENV VER_HOME ${apploc}
+VOLUME /opt/ramu1
+COPY index.html ${apploc}/index.html
+
+https://github.com/jenkinsci/docker/blob/587b2856cd225bb152c4abeeaaa24934c75aa460/Dockerfile
+https://www.devopsschool.com/tutorial/docker/dockerfile/dockerfile-example-sample-lab.html
+
+docker build -t image1 .
+
+docker build -f filename -t image1 .
+
+
+
+
+
+
+
+
+
+
+
+
+
